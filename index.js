@@ -4,49 +4,55 @@ const axios = require('axios');
 
 const app = express();
 
+// CORS
 app.use(cors());
+
+// JSON parse
 app.use(express.json());
 
+// Health check (Render için iyi olur)
 app.get('/', (req, res) => {
     res.send('API is running');
 });
 
-app.post('/getPrice', async (req, res) => {
-    const { cityId, validityDate } = req.body;
+app.post('/getPrices', async (req, res) => {
+    const ilCode = req.body.ilCode;
 
-    if (!cityId) {
-        return res.status(400).json({ error: "cityId is required" });
+    if (!ilCode) {
+        return res.status(400).json({ error: "ilCode is required" });
     }
 
-    // Eğer tarih gönderilmezse bugünün tarihi
-    const date = validityDate 
-        ? new Date(validityDate).toISOString()
-        : new Date().toISOString();
-
     try {
-        const response = await axios.get(
-            'https://mt-ecommerce-productapi.aygaz.com.tr/api/Price/GetOtogazPrice',
-            {
-                params: {
-                    cityId: cityId,
-                    validityDate: date
-                },
-                headers: {
-                    "accept": "application/json",
-                    "origin": "https://www.aygaz.com.tr",
-                    "referer": "https://www.aygaz.com.tr/",
-                    "x-appid": "8BC0A9EF-047A-4298-BFE2-942B5AF098CD",
-                    "x-devicecode": "WEBCIHAZI-10",
-                    "x-lang": "tr"
-                }
-            }
+        const dateResponse = await axios.post(
+            'https://kurumsal.aygaz.com.tr/otogaz/otogazapi.aspx/gecerlilikTarihleriGetir',
+            { il: ilCode },
+            { headers: { 'Content-Type': 'application/json' } }
         );
 
-        res.json(response.data);
+        const dates = dateResponse.data.d ? JSON.parse(dateResponse.data.d) : [];
+
+        const prices = await Promise.all(
+            dates.map(async (date) => {
+                const priceResponse = await axios.post(
+                    'https://kurumsal.aygaz.com.tr/otogaz/otogazapi.aspx/fiyatGetir',
+                    { il: ilCode, tarih: date },
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+
+                return {
+                    date: date,
+                    price: priceResponse.data.d
+                        ? JSON.parse(priceResponse.data.d)
+                        : null
+                };
+            })
+        );
+
+        res.json(prices);
 
     } catch (error) {
-        console.error(error.response?.data || error.message);
-        res.status(500).json({ error: 'API error' });
+        console.error(error.message);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 
