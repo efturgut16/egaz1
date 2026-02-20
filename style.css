@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    width: 100%;
+}
+
+.container-content {
+    width: 80%;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.top-gas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selection-gas {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.price-display {
+    border-radius: 5px;
+    border: 0;
+    color: #666;
+    font-weight: bold;
+    margin: 0;
+    padding: 40px 64px 40px 72px;
+    padding: 2.5rem 4rem 2.5rem 4.5rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: #8cc43c;
+}
+
+.price-tag {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.selection-gas h1 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 30px;
+    color: #000;
+}
+
+.selection-gas h2 {
+    color: #111;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.selection-gas span {
+    font-size: 14px;
+    color: #666;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.selection-gas label {
+    font-size: 14px;
+    color: #666;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.selection-gas select {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+}
+
+
+.selection-gas button {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    outline: none;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    color: #212529;
+}
+
+
+.table td,
+.table th {
+    padding: 14px;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+
+}
+
+tr:nth-child(2n){
+    background-color: #dadada;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}

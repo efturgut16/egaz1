@@ -1,0 +1,14 @@
+# railway.toml
+
+# Global settings for your app
+[env]
+PORT = 3000
+
+# Add the following section to enable CORS
+[[services]]
+  internalPort = 3000
+  protocol = "http"
+  script = "npm start"
+  cors = true  # Enable CORS for this service
+
+# You may need to adjust these settings based on your actual configuration
